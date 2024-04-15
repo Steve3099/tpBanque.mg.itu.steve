@@ -6,6 +6,7 @@ package com.tpjakarta.tpbanque.mg.itu.steve.service;
 
 import com.tpjakarta.tpbanque.mg.itu.steve.entity.CompteBancaire;
 import jakarta.annotation.sql.DataSourceDefinition;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
@@ -33,7 +34,7 @@ import java.util.List;
       "driverClass=com.mysql.cj.jdbc.Driver"
     }
 )
-@RequestScoped
+@Dependent
 public class GestionnaireCompte {
     
     @PersistenceContext(unitName = "banquePU")
@@ -53,6 +54,10 @@ public class GestionnaireCompte {
     public List<CompteBancaire> getAllComptes() {
        Query query = em.createNamedQuery("CompteBancaire.findAll");
        return query.getResultList();
+    }
+    
+    public int compte(){
+        return getAllComptes().size();
     }
     
 }
