@@ -5,6 +5,7 @@
 package com.tpjakarta.tpbanque.mg.itu.steve.jsf;
 
 import com.tpjakarta.tpbanque.mg.itu.steve.entity.CompteBancaire;
+import com.tpjakarta.tpbanque.mg.itu.steve.jsf.util.Util;
 import com.tpjakarta.tpbanque.mg.itu.steve.service.GestionnaireCompte;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
@@ -23,8 +24,14 @@ public class TransfertArgent implements Serializable {
     private long idEnvoyeur;
     private int somme;
 
+    private String error = "";
+
     @Inject
     GestionnaireCompte gc;
+
+    public String getError() {
+        return error;
+    }
 
     public long getIdReceveur() {
         return idReceveur;
@@ -57,8 +64,27 @@ public class TransfertArgent implements Serializable {
     }
 
     public String transfer() {
+        String erreur= "";
+        if (gc.getCompteById(idReceveur) == null) {
+            erreur += "pas de compte avec l'id du receveur";
+        }
+        if (gc.getCompteById(idEnvoyeur) == null) {
+            erreur += ", pas de compte avec l'id de l'envoyeur";
+        }
+        if (gc.getCompteById(idEnvoyeur) != null && gc.getCompteById(idEnvoyeur).getSolde() < somme) {
+            erreur += ", solde de l'envoyeur insufisant";
+        }
+        if(gc.getCompteById(idEnvoyeur) != null  && gc.getCompteById(idReceveur) != null && idEnvoyeur == idReceveur){
+            erreur +=", l'envoyeur et le receveur doivent être different";
+        }
+        if (erreur != "") {
+            error = erreur;
+            return null;
+        }
+
         gc.transfert(idReceveur, idEnvoyeur, somme);
-        return "listeComptes";
+        Util.addFlashInfoMessage("Transfert correctement effectué");
+        return "listeComptes?faces-redirect=true";
     }
 
 }

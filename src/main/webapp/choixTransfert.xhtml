@@ -15,15 +15,17 @@
             <ui:define name="content">
                 <h:form>
                     <h:outputLabel value="Entrez un id(envoyeur)" for="envoyeur"/>
-                    <h:inputText id="idEnvoyeur" value="#{transfertArgent.idEnvoyeur}"/>
+                    <h:inputText id="idEnvoyeur"  required="true" value="#{transfertArgent.idEnvoyeur}"/>
                     
                     <h:outputLabel value="Entrez un id(receveur)" for="receveur"/>
-                    <h:inputText id="idReceveur" value="#{transfertArgent.idReceveur}"/>
+                    <h:inputText id="idReceveur"  required="true" value="#{transfertArgent.idReceveur}"/>
                     
                     <h:outputLabel value="Entrez la somme a transferer" for="somme a transferer"/>
-                    <h:inputText id="somme" value="#{transfertArgent.somme}"/>
+                    <h:inputText id="somme"  required="true" value="#{transfertArgent.somme}"/>
                     <h:commandButton value="Valider" action="#{transfertArgent.transfer()}"/>
                 </h:form>
+                <h:outputText value="#{transfertArgent.error}" />
+                <h:messages/>
             </ui:define>
 
         </ui:composition>
