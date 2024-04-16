@@ -75,4 +75,10 @@ public class GestionnaireCompte {
         receveur.setSolde(receveur.getSolde()+somme);
         
     }
+    
+    @Transactional
+    public void ajoutCompte(String nom,int solde){
+        CompteBancaire b = new CompteBancaire(nom,solde);
+        em.persist(b);
+    }
 }
