@@ -47,4 +47,8 @@ public class ListeComptes implements Serializable {
         return "listeComptes";
     }
     
+    public String goToModif(Long id){
+        return "formModif?id="+id.toString()+"&amp;faces-redirect=true";
+    }
+    
 }

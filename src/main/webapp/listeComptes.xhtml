@@ -40,6 +40,13 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="modif"/>
+                            </f:facet>
+                             
+                             <h:commandButton value="modif" action="#{listeComptes.goToModif(item.id)}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="action"/>
                             </f:facet>
                             <h:commandLink action="#{listeComptes.supprimerCompte(item)}">suppprimer</h:commandLink>
