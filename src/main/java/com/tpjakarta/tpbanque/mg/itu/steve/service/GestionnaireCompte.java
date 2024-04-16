@@ -19,23 +19,23 @@ import java.util.List;
  * @author Steve
  */
 @Named(value = "gestionnaireCompte")
-@DataSourceDefinition (
-    className="com.mysql.cj.jdbc.MysqlDataSource",
-    name="java:app/jdbc/banque",
-    serverName="localhost",
-    portNumber=3306,
-    user="root",              // nom et
-    password="root", // mot de passe que vous avez donnés lors de la création de la base de données
-    databaseName="banque",
-    properties = {
-      "useSSL=false",
-      "allowPublicKeyRetrieval=true",
-      "driverClass=com.mysql.cj.jdbc.Driver"
-    }
+@DataSourceDefinition(
+        className = "com.mysql.cj.jdbc.MysqlDataSource",
+        name = "java:app/jdbc/banque",
+        serverName = "localhost",
+        portNumber = 3306,
+        user = "root", // nom et
+        password = "root", // mot de passe que vous avez donnés lors de la création de la base de données
+        databaseName = "banque",
+        properties = {
+            "useSSL=false",
+            "allowPublicKeyRetrieval=true",
+            "driverClass=com.mysql.cj.jdbc.Driver"
+        }
 )
 @ApplicationScoped
 public class GestionnaireCompte {
-    
+
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
 
@@ -44,41 +44,55 @@ public class GestionnaireCompte {
      */
     public GestionnaireCompte() {
     }
-    
+
     @Transactional
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
-    
+
     public List<CompteBancaire> getAllComptes() {
-       Query query = em.createNamedQuery("CompteBancaire.findAll");
-       return query.getResultList();
+        Query query = em.createNamedQuery("CompteBancaire.findAll");
+        return query.getResultList();
     }
-    
-    public int compte(){
+
+    public int compte() {
         return getAllComptes().size();
     }
-    
-    public CompteBancaire getCompteById(long id){
+
+    public CompteBancaire getCompteById(long id) {
         return em.find(CompteBancaire.class, id);
     }
-    
+
     @Transactional
-    public void transfert(long idReceveur,long idEnvoyeur,int somme){
+    public void transfert(long idReceveur, long idEnvoyeur, int somme) {
         CompteBancaire envoyeur = this.getCompteById(idEnvoyeur);
         CompteBancaire receveur = this.getCompteById(idReceveur);
-        
+
         envoyeur = em.merge(envoyeur);
         receveur = em.merge(receveur);
-        
-        envoyeur.setSolde(envoyeur.getSolde()-somme);
-        receveur.setSolde(receveur.getSolde()+somme);
-        
+
+        envoyeur.setSolde(envoyeur.getSolde() - somme);
+        receveur.setSolde(receveur.getSolde() + somme);
+
     }
-    
+
     @Transactional
-    public void ajoutCompte(String nom,int solde){
-        CompteBancaire b = new CompteBancaire(nom,solde);
+    public void ajoutCompte(String nom, int solde) {
+        CompteBancaire b = new CompteBancaire(nom, solde);
         em.persist(b);
     }
+
+    @Transactional
+    public void deposer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.deposer(montant);
+        em.merge(compteBancaire);
+    }
+
+    @Transactional
+    public void retirer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.retirer(montant);
+       em.merge(compteBancaire);
+    }
+
+    
 }
