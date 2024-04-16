@@ -38,6 +38,12 @@
                             </f:facet>
                             <h:outputText value="#{item.solde}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="action"/>
+                            </f:facet>
+                            <h:commandLink action="#{listeComptes.supprimerCompte(item)}">suppprimer</h:commandLink>
+                        </p:column>
 
                     </p:dataTable>
                 </h:form>

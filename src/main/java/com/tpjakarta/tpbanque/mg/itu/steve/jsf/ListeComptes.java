@@ -5,6 +5,7 @@
 package com.tpjakarta.tpbanque.mg.itu.steve.jsf;
 
 import com.tpjakarta.tpbanque.mg.itu.steve.entity.CompteBancaire;
+import com.tpjakarta.tpbanque.mg.itu.steve.jsf.util.Util;
 import com.tpjakarta.tpbanque.mg.itu.steve.service.GestionnaireCompte;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
@@ -37,6 +38,13 @@ public class ListeComptes implements Serializable {
             listeCompte =  gc.getAllComptes();
         }
         return listeCompte;
+    }
+    
+    public String supprimerCompte(CompteBancaire cb){
+        //CompteBancaire cb = gc.getCompteById(id);
+        gc.supprimer(cb);
+        Util.addFlashInfoMessage("suppression effectué");
+        return "listeComptes";
     }
     
 }

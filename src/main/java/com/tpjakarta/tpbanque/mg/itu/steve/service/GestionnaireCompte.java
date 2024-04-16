@@ -35,7 +35,7 @@ import java.util.List;
 )
 @ApplicationScoped
 public class GestionnaireCompte {
-
+    
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
 
@@ -44,55 +44,59 @@ public class GestionnaireCompte {
      */
     public GestionnaireCompte() {
     }
-
+    
     @Transactional
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
-
+    
     public List<CompteBancaire> getAllComptes() {
         Query query = em.createNamedQuery("CompteBancaire.findAll");
         return query.getResultList();
     }
-
+    
     public int compte() {
         return getAllComptes().size();
     }
-
+    
     public CompteBancaire getCompteById(long id) {
         return em.find(CompteBancaire.class, id);
     }
-
+    
     @Transactional
     public void transfert(long idReceveur, long idEnvoyeur, int somme) {
         CompteBancaire envoyeur = this.getCompteById(idEnvoyeur);
         CompteBancaire receveur = this.getCompteById(idReceveur);
-
+        
         envoyeur = em.merge(envoyeur);
         receveur = em.merge(receveur);
-
+        
         envoyeur.setSolde(envoyeur.getSolde() - somme);
         receveur.setSolde(receveur.getSolde() + somme);
-
+        
     }
-
+    
     @Transactional
     public void ajoutCompte(String nom, int solde) {
         CompteBancaire b = new CompteBancaire(nom, solde);
         em.persist(b);
     }
-
+    
     @Transactional
     public void deposer(CompteBancaire compteBancaire, int montant) {
         compteBancaire.deposer(montant);
         em.merge(compteBancaire);
     }
-
+    
     @Transactional
     public void retirer(CompteBancaire compteBancaire, int montant) {
         compteBancaire.retirer(montant);
-       em.merge(compteBancaire);
+        em.merge(compteBancaire);
     }
-
+    
+    @Transactional
+    public void supprimer(CompteBancaire cb) {
+        em.remove(em.merge(cb));
+    }
     
 }
