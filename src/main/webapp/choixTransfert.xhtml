@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="jakarta.faces.html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/template_defaut.xhtml">
+
+            <ui:define name="top">
+                Choix de transfert
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <h:outputLabel value="Entrez un id(envoyeur)" for="envoyeur"/>
+                    <h:inputText id="idEnvoyeur" value="#{transfertArgent.idEnvoyeur}"/>
+                    
+                    <h:outputLabel value="Entrez un id(receveur)" for="receveur"/>
+                    <h:inputText id="idReceveur" value="#{transfertArgent.idReceveur}"/>
+                    
+                    <h:outputLabel value="Entrez la somme a transferer" for="somme a transferer"/>
+                    <h:inputText id="somme" value="#{transfertArgent.somme}"/>
+                    <h:commandButton value="Valider" action="#{transfertArgent.transfer()}"/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

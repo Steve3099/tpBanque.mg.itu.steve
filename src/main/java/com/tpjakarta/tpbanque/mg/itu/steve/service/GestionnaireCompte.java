@@ -59,4 +59,20 @@ public class GestionnaireCompte {
         return getAllComptes().size();
     }
     
+    public CompteBancaire getCompteById(long id){
+        return em.find(CompteBancaire.class, id);
+    }
+    
+    @Transactional
+    public void transfert(long idReceveur,long idEnvoyeur,int somme){
+        CompteBancaire envoyeur = this.getCompteById(idEnvoyeur);
+        CompteBancaire receveur = this.getCompteById(idReceveur);
+        
+        envoyeur = em.merge(envoyeur);
+        receveur = em.merge(receveur);
+        
+        envoyeur.setSolde(envoyeur.getSolde()-somme);
+        receveur.setSolde(receveur.getSolde()+somme);
+        
+    }
 }

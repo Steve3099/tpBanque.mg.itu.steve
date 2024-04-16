@@ -18,25 +18,25 @@
                 <h:form>
                     <p:dataTable value="#{listeComptes.allComptes}"
                                  var="item" >
-                        <h:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="id"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="nom"/>
                             </f:facet>
                             <h:outputText value="#{item.nom}"/>
-                        </h:column>
+                        </p:column>
 
-                        <h:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="soldes"/>
                             </f:facet>
                             <h:outputText value="#{item.solde}"/>
-                        </h:column>
+                        </p:column>
 
                     </p:dataTable>
                 </h:form>
