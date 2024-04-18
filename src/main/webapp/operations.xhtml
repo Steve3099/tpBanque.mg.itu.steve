@@ -19,7 +19,7 @@
             </ui:define>
 
             <ui:define name="top">
-                top
+                liste des opérations éffectuer sur le compte de #{operations.compteBan.nom}
             </ui:define>
 
             <ui:define name="content">
@@ -52,7 +52,7 @@
                     
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Date opération"/>
+                            <h:outputText value="Montant"/>
                         </f:facet>
                         <h:outputText value="#{item.montant}"/>
                     </p:column>
