@@ -51,6 +51,12 @@
                             </f:facet>
                             <h:commandLink action="#{listeComptes.supprimerCompte(item)}">suppprimer</h:commandLink>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Historique operation"/>
+                            </f:facet>
+                            <h:link value="Détails" outcome="operations?id=#{item.id}&amp;faces-redirect=true"/>
+                        </p:column>
 
                     </p:dataTable>
                 </h:form>

@@ -22,7 +22,7 @@ public class OperationBancaire implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-     private String description;
+    private String description;
     private LocalDateTime dateOperation;
     private int montant;
 
@@ -58,9 +58,10 @@ public class OperationBancaire implements Serializable {
     public String toString() {
         return "com.tpjakarta.tpbanque.mg.itu.steve.entity.OperationBancaire[ id=" + id + " ]";
     }
-    
-    public OperationBancaire() { }
-                    
+
+    public OperationBancaire() {
+    }
+
     public OperationBancaire(String description, int montant) {
         this.description = description;
         this.montant = montant;
@@ -90,5 +91,5 @@ public class OperationBancaire implements Serializable {
     public void setMontant(int montant) {
         this.montant = montant;
     }
-    
+
 }
