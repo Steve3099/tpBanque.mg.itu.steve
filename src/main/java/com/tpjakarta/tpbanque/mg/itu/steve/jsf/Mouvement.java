@@ -16,6 +16,7 @@ import jakarta.faces.validator.ValidatorException;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.OptimisticLockException;
 import java.io.Serializable;
 
 @Named(value = "mouvement")
@@ -100,13 +101,20 @@ public class Mouvement implements Serializable {
     }
 
     public String enregistrerMouvement() {
-        if (typeMouvement.equals("ajout")) {
-            gestionnaireCompte.deposer(compte, montant);
-        } else {
-            gestionnaireCompte.retirer(compte, montant);
-        }
-        Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
-        return "listeComptes?faces-redirect=true";
-    }
+    try {
+      if (typeMouvement.equals("ajout")) {
+        gestionnaireCompte.deposer(compte, montant);
+      } else {
+        gestionnaireCompte.retirer(compte, montant);
+      }
+      Util.addFlashInfoMessage(typeMouvement + " de " + montant
+              + " enregistré sur compte de " + compte.getNom());
+      return "listeComptes?faces-redirect=true";
+    } catch (OptimisticLockException ex) {
+        Util.messageErreur("Le compte de " + compte.getNom()
+                  + " a été modifié ou supprimé par un autre utilisateur !");
+        return null; // pour rester sur la page s'il y a une exception
+    } // end try
+  }
 
 }
